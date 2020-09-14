@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="320dp">
+
+    <LinearLayout
+        android:id="@+id/titleDescriptionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#fff"
+        android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/titleDescriptionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_background"
+            android:hint="Title"/>
+
+       <de.hdodenhof.circleimageview.CircleImageView
+           android:id="@+id/userImageView"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:padding="4dp"
+           android:layout_marginEnd="4dp"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/descriptionEditTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_below="@+id/titleDescriptionLayout"
+        android:background="@drawable/edit_text_background"
+        android:hint="Description"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/postImageView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="#2d2d2d"
+        android:layout_below="@+id/titleDescriptionTextView"/>
+
+    <ImageView
+        android:id="@+id/editPostImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/add_post_background"
+        android:src="@drawable/ic_mode_edit_black_24dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:background="@drawable/add_post_background"
+        android:padding="6dp"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

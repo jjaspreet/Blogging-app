@@ -45,7 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
 
-        Post post = posts.get(position);
+        final Post post = posts.get(position);
 
         holder.titleTextView.setText(post.getTitle());
         Glide.with(context).load(post.getUserPhoto()).into(holder.userImageView);
@@ -55,7 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onClick(View v) {
                 if(postClickListener != null){
-                    postClickListener.onPOstClick();
+                    postClickListener.onPOstClick( post);
                 }
             }
         });
@@ -86,6 +86,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
    public interface PostClickListener{
-        void onPOstClick();
+        void onPOstClick(Post post);
    }
 }

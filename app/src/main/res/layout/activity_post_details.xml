@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.PostDetailsActivity">
+
+    <ImageView
+        android:id="@+id/postDetailsImage"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="220dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/postDetailsTitleTextView"
+        android:layout_width="match_parent"
+
+        android:text="TextView"
+        android:textColor="#000"
+        android:layout_marginStart="4dp"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#2e2e2e"/>
+
+        <TextView
+            android:id="@+id/postDetailsUploadDatetextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="18 Jan 2018 | by Arun Leimor"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/postDetailsDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="4dp"
+            android:textColor="#000"
+            android:lineSpacingExtra="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:padding="4dp"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userPostImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#000"
+                android:layout_marginStart="4dp" />
+
+            <EditText
+                android:id="@+id/commentEditTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/edit_text_dark_background"/>
+
+            <Button
+                android:id="@+id/addCommentButtonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/edit_text_dark_background"
+                android:textColor="#000"
+                android:text="ADD"/>
+
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -59,6 +59,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.gson.Gson;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -87,6 +88,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private  Uri imageUri;
     private FirebaseUser user;
     private EditText titleTextView,descriptionTextView;
+    private Gson gson;
     private TextView headerName, emailAddress;
     private Toolbar toolbar;
     private Uri postUri;
@@ -113,6 +115,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         firebaseDatabase  = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Posts");
+
+        gson  = new Gson();
 
 
 
@@ -164,7 +168,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // init Description Dialog
 
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
-        LayoutInflater inflater = this.getLayoutInflater();
+        final LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.layout_add_description, null);
 
         final EditText editText = (EditText) dialogView.findViewById(R.id.edt_comment);
@@ -235,8 +239,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 postAdapter = new PostAdapter(HomeActivity.this, postsList, new PostAdapter.PostClickListener() {
                     @Override
-                    public void onPOstClick() {
-                        Toast.makeText(HomeActivity.this, "Post Clicked", Toast.LENGTH_SHORT).show();
+                    public void onPOstClick(Post post) {
+
+                        Intent intent= new Intent(HomeActivity.this, PostDetailsActivity.class);
+                        intent.putExtra("Post", gson.toJson(post));
+                        startActivity(intent);
                     }
                 });
 

@@ -4,6 +4,8 @@ import com.google.firebase.database.ServerValue;
 
 public class Post {
 
+    private int id;
+
     private String title;
 
     private String description;
@@ -31,13 +33,14 @@ public class Post {
 
     }
 
-    public Post(String title, String description, String picture, String userId, String userPhoto) {
+    public Post(String title, String description, String picture, String userId, String userPhoto, int id) {
         this.title = title;
         this.description = description;
         this.picture = picture;
         this.userId = userId;
         this.userPhoto = userPhoto;
         this.timeStamp = ServerValue.TIMESTAMP;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -82,6 +85,14 @@ public class Post {
 
     public Object getTimeStamp() {
         return timeStamp;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTimeStamp(Object timeStamp) {

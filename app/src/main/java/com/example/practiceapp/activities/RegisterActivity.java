@@ -36,6 +36,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_FOR_PERMISSION = 1;
@@ -53,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
     private FirebaseStorage firebaseStorage;
+    private boolean isPickedFromPhone =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
             if(data != null){
                pickedImageUri = data.getData();
                profileImageView.setImageURI(pickedImageUri);
+               isPickedFromPhone = true;
             }
         }
     }
@@ -200,6 +205,11 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 
+        if(!emailValidator(email)){
+            emailEditText.setError("Please enter valid email id");
+            return false;
+        }
+
 
         if(TextUtils.isEmpty(password)){
             passwordEditText.setError("Mandatory fields");
@@ -209,6 +219,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(confirmPassword)){
             confirmPasswordEditText.setError("Mandatory fields");
+            return false;
+        }
+
+        if(profileImageView.getDrawable() == null){
+            Toast.makeText(this, "Please select an post image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(profileImageView.getDrawable() != getResources().getDrawable(R.drawable.no_profile_img)){
+            Toast.makeText(this, "Please select an post image", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -320,6 +340,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void moveToHomeActivity(){
         startActivity(new Intent(this, HomeActivity.class));
+    }
+
+    public boolean emailValidator(String email)
+    {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
 }

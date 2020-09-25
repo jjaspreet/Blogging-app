@@ -68,7 +68,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.example.practiceapp.R.layout.layout_add_post;
 import static com.example.practiceapp.activities.RegisterActivity.REQUEST_CODE_FOR_GALLERY;
@@ -98,6 +100,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private PostAdapter postAdapter;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabaseForAddingPost;
+    private  DatabaseReference databaseReferenceForAddingPost;
+    private int isFirstTym = 0;
+    private int id =0;
+    private HashSet<Post> postSet = new HashSet<>();
     private List<Post> postsList = new ArrayList<>();
 
 
@@ -122,6 +129,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         initPopup();
@@ -136,6 +144,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         fabButton = findViewById(R.id.fabButton);
+
 
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,6 +214,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        postAdapter = new PostAdapter(HomeActivity.this, postsList, new PostAdapter.PostClickListener() {
+            @Override
+            public void onPOstClick(Post post) {
+
+                Intent intent= new Intent(HomeActivity.this, PostDetailsActivity.class);
+                intent.putExtra("Post", gson.toJson(post));
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(postAdapter);
+
 
 
 
@@ -230,28 +250,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot postSnap: snapshot.getChildren()){
-                    Post post = postSnap.getValue(Post.class);
+                if(isFirstTym == 0){
+                    postsList.clear();
+                    for(DataSnapshot postSnap: snapshot.getChildren()){
+                        Post post = postSnap.getValue(Post.class);
+                        if(!postsList.contains(post)){
 
-                    postsList.add(post);
-
+                            postsList.add(post);
+                        }
+                    }
+                    postAdapter.notifyDataSetChanged();
+                    listProgressBar.setVisibility(View.GONE);
+                    isFirstTym = 1;
                 }
 
-                postAdapter = new PostAdapter(HomeActivity.this, postsList, new PostAdapter.PostClickListener() {
-                    @Override
-                    public void onPOstClick(Post post) {
 
-                        Intent intent= new Intent(HomeActivity.this, PostDetailsActivity.class);
-                        intent.putExtra("Post", gson.toJson(post));
-                        startActivity(intent);
-                    }
-                });
-
-                listProgressBar.setVisibility(View.GONE);
-                recyclerView.setAdapter(postAdapter);
             }
-
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -285,9 +299,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void pushDataToFirebase(){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Post_Image");
-        final StorageReference postImage = storageReference.child(pickedImageUri.getLastPathSegment());
+        final StorageReference postImage = storageReference.child(postUri.getLastPathSegment());
 
-        postImage.putFile(pickedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        postImage.putFile(postUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
               postImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -299,7 +313,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                       // create a post object and push it to the firebase
                       Post post = new Post(titleTextView.getText().toString(), descriptionTextView.getText().toString()
                       , imageDownloadLink, user.getUid(),
-                              user.getPhotoUrl().toString());
+                              user.getPhotoUrl().toString()
+                      ,id++);
 
                       addPost(post);
                   }
@@ -319,9 +334,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void addPost(Post post){
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-
-        DatabaseReference databaseReference = firebaseDatabase.getReference().child("Posts").push();
+         firebaseDatabase = FirebaseDatabase.getInstance();
+         databaseReference = firebaseDatabase.getReference().child("Posts").push();
+         isFirstTym = 0;
 
         // get the post unique id
 

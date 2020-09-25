@@ -35,6 +35,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.example.practiceapp.activities.RegisterActivity.REQUEST_CODE_FOR_GALLERY;
 import static com.example.practiceapp.activities.RegisterActivity.REQUEST_CODE_FOR_PERMISSION;
 
@@ -227,10 +230,27 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
 
+        if(!emailValidator(email)){
+            emailEditTextView.setError("Please enter valid email id");
+            return false;
+        }
+
+
         if(TextUtils.isEmpty(password)){
             passwordEditTextView.setError("Mandatory Fields");
             return false;
         }
+
+        if(profileImageView.getDrawable() == null){
+            Toast.makeText(this, "Please select an post image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(profileImageView.getDrawable() != getResources().getDrawable(R.drawable.no_profile_img)){
+            Toast.makeText(this, "Please select an post image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
 
         return true;
     }
@@ -261,5 +281,15 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode== REQUEST_CODE_FOR_PERMISSION && grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             openGallery();
         }
+    }
+
+    public boolean emailValidator(String email)
+    {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }

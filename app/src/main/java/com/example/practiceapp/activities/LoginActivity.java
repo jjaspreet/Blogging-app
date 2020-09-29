@@ -1,6 +1,7 @@
 package com.example.practiceapp.activities;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -42,6 +43,8 @@ import static com.example.practiceapp.activities.RegisterActivity.REQUEST_CODE_F
 import static com.example.practiceapp.activities.RegisterActivity.REQUEST_CODE_FOR_PERMISSION;
 
 public class LoginActivity extends AppCompatActivity {
+
+    public static final String TAG = "Login Activity";
 
 
 
@@ -96,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                finish();
+//                Log.d(TAG, "onClick: Finish Called");
                 if(validateFields()){
                     String email = emailEditTextView.getText().toString();
                     String password = passwordEditTextView.getText().toString();
@@ -246,7 +251,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
 
-        if(profileImageView.getDrawable() != getResources().getDrawable(R.drawable.no_profile_img)){
+        if(profileImageView.getDrawable().getConstantState() == ContextCompat.getDrawable(this, R.drawable.no_profile_img).getConstantState()){
             Toast.makeText(this, "Please select an post image", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -257,6 +262,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        Log.d(TAG, "onStop: ");
         super.onStop();
     }
 
@@ -265,6 +271,38 @@ public class LoginActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.d(TAG, "onRestart: ");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
     }
 
     private void showMessage(String message){

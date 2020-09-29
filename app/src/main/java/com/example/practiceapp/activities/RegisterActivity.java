@@ -227,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 
-        if(profileImageView.getDrawable() != getResources().getDrawable(R.drawable.no_profile_img)){
+        if(profileImageView.getDrawable().getConstantState() == ContextCompat.getDrawable(this, R.drawable.no_profile_img).getConstantState()){
             Toast.makeText(this, "Please select an post image", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -339,7 +339,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void moveToHomeActivity(){
-        startActivity(new Intent(this, HomeActivity.class));
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public boolean emailValidator(String email)

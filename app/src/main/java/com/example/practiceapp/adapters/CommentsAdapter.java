@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -54,7 +55,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     @Override
     public void onBindViewHolder(@NonNull final CommentsViewHolder holder, int position) {
 
-        Comments comments = commentsList.get(position);
+        final Comments comments = commentsList.get(position);
 
         Glide.with(context).load(comments.getUserPhoto()).into(holder.userImageView);
 
@@ -79,7 +80,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public static class CommentsViewHolder extends RecyclerView.ViewHolder{
 
         private TextView commentTextView, liketextView;
-        private ImageView userImageView, reactionImageView;
+        private ImageView userImageView, reactionImageView, bookmarImageView;
         private EmojiLikeView emojiView;
 
         public CommentsViewHolder(@NonNull View itemView) {
@@ -96,5 +97,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     public interface  OnReactionTouchListener{
         void onReaction(EmojiLikeView emojiView, ImageView reactionImageView, TextView likeTextView);
+        void onBookmarkClicked(Comments comments);
     }
 }

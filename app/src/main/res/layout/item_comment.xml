@@ -28,16 +28,19 @@
         android:layout_marginTop="12dp"
         android:visibility="invisible"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Like"
-            android:id="@+id/likeButton"/>
+
+        <ImageView
+            android:id="@+id/bookmarkImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+           />
 
         <ImageView
             android:id="@+id/reactionImageView"
             android:layout_width="20dp"
             android:layout_marginStart="4dp"
+            android:visibility="visible"
             android:layout_height="20dp"/>
 
     </LinearLayout>

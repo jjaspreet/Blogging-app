@@ -49,7 +49,7 @@ import ro.andreidobrescu.emojilike.OnEmojiSelectedListener;
 
 public class PostDetailsActivity extends AppCompatActivity implements IActivityWithEmoji {
 
-    private ImageView postImageView, userImageView;
+    private ImageView postImageView, userImageView, bookmarkImageView;
     private TextView titleTextView, descriptionTextView, dateTextVew;
     private FirebaseDatabase firebaseDatabase;
     private EditText commentEditTextView;
@@ -81,6 +81,7 @@ public class PostDetailsActivity extends AppCompatActivity implements IActivityW
         descriptionTextView = findViewById(R.id.postDetailsDescriptionTextView);
         dateTextVew = findViewById(R.id.postDetailsUploadDatetextView);
         commentEditTextView = findViewById(R.id.commentEditTextView);
+        bookmarkImageView = findViewById(R.id.bookmarkImageView);
 
         progressBar = findViewById(R.id.commentsProgressBar);
 
@@ -89,6 +90,13 @@ public class PostDetailsActivity extends AppCompatActivity implements IActivityW
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         commentRecyclerView.setLayoutManager(layoutManager);
         commentRecyclerView.setHasFixedSize(true);
+
+        bookmarkImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         adapter = new CommentsAdapter(this, commentsList, new CommentsAdapter.OnReactionTouchListener() {
             @Override
@@ -112,6 +120,11 @@ public class PostDetailsActivity extends AppCompatActivity implements IActivityW
                             }
                         })
                         .setup();
+            }
+
+            @Override
+            public void onBookmarkClicked(Comments comments) {
+
             }
         });
         commentRecyclerView.setAdapter(adapter);

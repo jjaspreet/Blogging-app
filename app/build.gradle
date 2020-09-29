@@ -46,6 +46,8 @@ dependencies {
     //Emoji dependency
     implementation 'com.github.andob:emojilike-android:beta2'
 
+    implementation 'com.github.mukeshsolanki:Android-Shared-Preferences-TinyDB-:1.1.10'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

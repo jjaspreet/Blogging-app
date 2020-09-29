@@ -23,6 +23,7 @@ import com.example.practiceapp.R;
 import com.example.practiceapp.adapters.CommentsAdapter;
 import com.example.practiceapp.data.Comments;
 import com.example.practiceapp.data.Post;
+import com.example.practiceapp.database.PostRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -63,6 +64,7 @@ public class PostDetailsActivity extends AppCompatActivity implements IActivityW
     private String strObj;
     private Post obj;
     private ProgressBar progressBar;
+    private PostRepository postRepository;
 
 
     @Override
@@ -73,6 +75,7 @@ public class PostDetailsActivity extends AppCompatActivity implements IActivityW
         postImageView = findViewById(R.id.postDetailsImage);
         userImageView = findViewById(R.id.userPostImageView);
         emojiLikeTouchDetector = new EmojiLikeTouchDetector();
+        postRepository = new PostRepository(getApplication());
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Comments");
@@ -94,6 +97,7 @@ public class PostDetailsActivity extends AppCompatActivity implements IActivityW
         bookmarkImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
             }
         });
